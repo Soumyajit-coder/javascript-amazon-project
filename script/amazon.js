@@ -1,3 +1,9 @@
+/*
+ import { cart as myCart } from '../data/cart.js'; -- To avoid the name conflict 
+ const cart = []; -- Now we can use the variable as name cart.
+*/
+import { cart } from '../data/cart.js';
+
 let productsListHtml = '';
 
 products.forEach((product) => {
@@ -45,8 +51,46 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">Add to Cart</button>
+          <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">Add to Cart</button>
         </div>`;
 });
 
 document.querySelector('.js-products-list').innerHTML = productsListHtml;
+
+// Interactive all Add to cart button
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+  button.addEventListener('click', () => {
+    const productId = button.dataset.productId;
+    
+    let matchingItem;
+    /*
+     Checking if the item is already present in cart or not.
+     */
+    cart.forEach((item) => {      
+      if (productId === item.productId) {
+        matchingItem = item;
+      }      
+    });  
+    /*
+     If present then increase the quantity, otherwisw add the object in cart.
+     */
+    if (matchingItem) {
+        matchingItem.quantity += 1;
+      } else {
+        cart.push({
+          productId: productId,
+          quantity: 1
+        });
+      }
+
+      /*
+      Interactive the cart icon & increase the cart item.
+      */
+     let cartQuantity = 0;
+     cart.forEach((item) => {
+      cartQuantity += item.quantity;
+     });
+     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity
+      // console.log(cartQuantity);
+  });
+});
