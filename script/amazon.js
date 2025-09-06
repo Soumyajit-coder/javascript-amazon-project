@@ -3,6 +3,7 @@
  const cart = []; -- Now we can use the variable as name cart.
 */
 import { cart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
 let productsListHtml = '';
 
