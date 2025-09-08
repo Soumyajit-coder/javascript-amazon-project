@@ -1,6 +1,8 @@
 import { cart, removeFromCart } from '../data/cart.js';
+import { deliveryOptions } from '../data/deliveryOptions.js';
 import { products } from '../data/products.js';
 import { formatWithExtraDays } from './utilities/helper.js';
+
 
 let currentDate = formatWithExtraDays(new Date(), 7);
 
@@ -100,3 +102,21 @@ document.querySelectorAll('.js-delete-item').forEach((button) => {
     });
 });
 
+function deliveryDayOptions(){
+  deliveryOptions.forEach((deliveryOption) => {
+    `
+      <div class="delivery-option">
+        <input
+          type="radio"
+          checked
+          class="delivery-option-input"
+          name="delivery-option-${matchingProduct.id}"
+        />
+        <div>
+          <div class="delivery-option-date">Tuesday, June 21</div>
+          <div class="delivery-option-price">FREE Shipping</div>
+        </div>
+      </div>
+    `;
+  });
+}
