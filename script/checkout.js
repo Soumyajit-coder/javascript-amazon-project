@@ -1,18 +1,19 @@
 import { cart, removeFromCart } from '../data/cart.js';
 import { products } from '../data/products.js';
+import { formatWithExtraDays } from './utilities/helper.js';
+
+let currentDate = formatWithExtraDays(new Date(), 7);
 
 let cartSummeryHTML = '';
 
 cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-    console.log(cartItem);
     let matchingProduct;
     products.forEach((product) => {
         if (product.id === productId) {
             matchingProduct = product;
         }
     });
-    console.log(matchingProduct);
     cartSummeryHTML += `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">Delivery date: Tuesday, June 21</div>
