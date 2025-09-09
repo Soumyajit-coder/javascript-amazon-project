@@ -14,7 +14,7 @@ if (!cart) {
   {
     productId: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
     quantity: 1,
-    deliveryOptionId: 1
+    deliveryOptionId: 3
   }];
 }
 
@@ -60,3 +60,17 @@ export function removeFromCart(productId){
   saveToStorage();
 }
 
+// Update delivery option function
+export function updateDeliveryOption(productId, deliveryOptionId){
+  let matchingItem;
+
+  cart.forEach((cartItem) => {
+    if(productId === cartItem.productId){
+      matchingItem = cartItem;
+    }
+  });
+  // console.log(deliveryOptionId);
+  matchingItem.deliveryOptionId = deliveryOptionId;
+    // console.log(matchingItem);
+  saveToStorage();
+}
