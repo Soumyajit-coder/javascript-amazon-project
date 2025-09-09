@@ -78,12 +78,12 @@ document.querySelectorAll('.js-delete-item').forEach((button) => {
     });
 });
 
-// document.querySelectorAll('.js-delivery-option').forEach((element) => {
-//   element.addEventListener('click', () => {
-//     const {productId, deliveryOptionId} = element.dataset;
-//     updateDeliveryOption(productId, deliveryOptionId);
-//   });
-// });
+document.querySelectorAll('.js-delivery-option').forEach((element) => {
+  element.addEventListener('click', () => {
+    const {productId, deliveryOptionId} = element.dataset;
+    updateDeliveryOption(productId, deliveryOptionId);
+  });
+});
 
 function deliveryDayOptions(matchingProduct, cartItem){
   let deliveryOptionsHTML = '';
