@@ -1,6 +1,6 @@
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
-import { products } from '../../data/products.js';
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { getProduct } from '../../data/products.js';
 import { formatWithExtraDays } from '../utilities/helper.js';
 
 
@@ -11,21 +11,10 @@ export function renderOrderSummary(){
 
   cart.forEach((cartItem) => {
       const productId = cartItem.productId;
-      let matchingProduct;
-      products.forEach((product) => {
-          if (product.id === productId) {
-              matchingProduct = product;
-          }
-      });
+      let matchingProduct = getProduct(productId);
 
       const deliveryOptionId = Number(cartItem.deliveryOptionId);
-      let deliveryOption;
-      deliveryOptions.forEach((option) => {
-
-        if (option.id === deliveryOptionId) {
-          deliveryOption = option;
-        }
-      });
+      let deliveryOption = getDeliveryOption(deliveryOptionId);
       cartSummeryHTML += `
           <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
               <div class="delivery-date">Delivery date:${formatWithExtraDays(new Date(), deliveryOption.deliveryDays)} </div>
