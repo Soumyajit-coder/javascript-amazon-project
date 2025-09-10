@@ -2,6 +2,7 @@ import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { getProduct } from '../../data/products.js';
 import { formatWithExtraDays } from '../utilities/helper.js';
+import { renderPaymentSummary } from './paymentSummery.js';
 
 
 let currentDate = formatWithExtraDays(new Date(), 7);
@@ -60,7 +61,7 @@ export function renderOrderSummary(){
       button.addEventListener('click', () => {
           const productId = button.dataset.productId;
           removeFromCart(productId);
-          
+          renderPaymentSummary();
           // Update in HTML
           const cartContainer = document.querySelector(`.js-cart-item-container-${productId}`);
           cartContainer.remove();
@@ -72,6 +73,7 @@ export function renderOrderSummary(){
       const {productId, deliveryOptionId} = element.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 
