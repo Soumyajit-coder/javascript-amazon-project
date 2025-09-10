@@ -1,4 +1,4 @@
-import { cart, removeFromCart } from '../data/cart.js';
+import { cart, removeFromCart, updateDeliveryOption } from '../data/cart.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
 import { products } from '../data/products.js';
 import { formatWithExtraDays } from './utilities/helper.js';
@@ -17,17 +17,17 @@ cart.forEach((cartItem) => {
         }
     });
 
-    const deliveryOptionId = cartItem.deliveryOptionId;
-    let displayDate;
+    const deliveryOptionId = Number(cartItem.deliveryOptionId);
+    let deliveryOption;
     deliveryOptions.forEach((option) => {
+
       if (option.id === deliveryOptionId) {
-        let displayDate = formatWithExtraDays(new Date(), option.deliveryDays);
+        deliveryOption = option;
       }
     });
-    // console.log(matchingDeliveryOption);
     cartSummeryHTML += `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
-            <div class="delivery-date">Delivery date: ${displayDate} </div>
+            <div class="delivery-date">Delivery date:${formatWithExtraDays(new Date(), deliveryOption.deliveryDays)} </div>
 
             <div class="cart-item-details-grid">
               <img
@@ -64,7 +64,6 @@ cart.forEach((cartItem) => {
 });
 // js-order-summary
 document.querySelector('.js-order-summary').innerHTML = cartSummeryHTML;
-// console.log(cartSummeryHTML);
 
 // Remove item from cart functionality
 document.querySelectorAll('.js-delete-item').forEach((button) => {
@@ -94,8 +93,8 @@ function deliveryDayOptions(matchingProduct, cartItem){
 
     const deliveryPrice = deliveryOption.priceCent === 0 ? 'Free' : `$${(deliveryOption.priceCent / 100).toFixed(2)}`;
     // Check if this delivery option is selected for this cart item
-    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
-
+    const isChecked = deliveryOption.id === Number(cartItem.deliveryOptionId);
+    
     deliveryOptionsHTML += `<div class="delivery-option js-delivery-option" data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliveryOption.id}">
         <input
           type="radio"
